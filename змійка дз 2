@@ -1,0 +1,130 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+// Леонід
+
+namespace GameLoopExemple
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            var random = new Random();
+            int cursorPositionX = Console.WindowWidth / 2;
+            int cursorPositionY = Console.WindowHeight / 2;
+            int letPositionX = random.Next(1, Console.WindowWidth);
+            int letPositionY = random.Next(1, Console.WindowHeight);
+
+            char head = Convert.ToChar(1);
+            char body = Convert.ToChar(3);
+            char let = Convert.ToChar(4);
+
+            int framesCounter = 0;
+
+            var time = DateTime.Now.Ticks / (TimeSpan.TicksPerMillisecond * 1000);
+
+            //было 13 fps стало 
+
+            while (true)
+            {
+                //timing
+                System.Threading.Thread.Sleep(50);
+
+
+                //input
+                ConsoleKey key = ConsoleKey.NoName;
+
+                if (Console.KeyAvailable)
+                {
+                    key = Console.ReadKey(true).Key;
+                }
+
+                //update
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        cursorPositionY--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        cursorPositionY++;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        cursorPositionX--;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        cursorPositionX++;
+                        break;
+                }
+
+                if (cursorPositionX >= Console.WindowWidth - 3)
+                {
+                    cursorPositionX = 0;
+                }
+
+                //render
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        Console.Clear();
+                        Console.SetCursorPosition(letPositionX, letPositionY);
+                        Console.WriteLine(let);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY);
+                        Console.WriteLine(head);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY + 1);
+                        Console.WriteLine(body);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY + 2);
+                        Console.Write(body);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        Console.Clear();
+                        Console.SetCursorPosition(letPositionX, letPositionY);
+                        Console.WriteLine(let);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY);
+                        Console.WriteLine(head);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY - 1);
+                        Console.WriteLine(body);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY - 2);
+                        Console.Write(body);
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        Console.Clear();
+                        Console.SetCursorPosition(letPositionX, letPositionY);
+                        Console.WriteLine(let);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY);
+                        Console.Write($"{head}{body}{body}");
+                        break;
+                    case ConsoleKey.RightArrow:
+                        Console.Clear();
+                        Console.SetCursorPosition(letPositionX, letPositionY);
+                        Console.WriteLine(let);
+                        Console.SetCursorPosition(cursorPositionX, cursorPositionY);
+                        Console.Write($"{body}{body}{head}");
+                        break;
+
+                }
+                if (cursorPositionX == letPositionX && cursorPositionY == letPositionY)
+                {
+                    cursorPositionX = Console.WindowWidth / 2;
+                    cursorPositionY = Console.WindowHeight / 2;
+                    Console.Write($"       you died        ");
+                    Environment.Exit(0);
+
+                }
+                framesCounter++;
+                var newTime = DateTime.Now.Ticks / (TimeSpan.TicksPerMillisecond * 1000);
+                if (newTime != time)
+                {
+                    time = newTime;
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write(framesCounter);
+                    framesCounter = 0;
+                }
+
+            }
+
+        }
+    }
+}
