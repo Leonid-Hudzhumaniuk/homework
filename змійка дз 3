@@ -59,13 +59,6 @@ namespace GameLoopExemple
 
         protected override void Update()
         {
-            while (true)
-            {
-                //timing
-                System.Threading.Thread.Sleep(50);
-
-
-                //input
 
                 //update
                 switch (key)
@@ -146,8 +139,6 @@ namespace GameLoopExemple
                     break;
 
             }
-
-        }
     }
     #endregion
 
