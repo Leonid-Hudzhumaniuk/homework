@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -100,27 +100,8 @@ namespace GameLoopExemple
                     }
                 }
             }
-            switch (key)
-            {
-                case ConsoleKey.UpArrow:        
-                    _gameWorld.AddGameObject(new Circle(0, new Point(cursorPositionX, cursorPositionY))); 
-                    _gameWorld.AddGameObject(new Circle(0, new Point(cursorPositionX, cursorPositionY - Console.WindowWidth)));
-                    _gameWorld.AddGameObject(new Circle(0, new Point(cursorPositionX, cursorPositionY - (Console.WindowWidth * 2))));
 
-                    break;
-                case ConsoleKey.DownArrow:
-                    _gameWorld.GetGameObjects().Clear();
-                    cursorPositionY++;
-                    break;
-                case ConsoleKey.LeftArrow:
-                    _gameWorld.GetGameObjects().Clear();
-                    cursorPositionX--;
-                    break;
-                case ConsoleKey.RightArrow:
-                    _gameWorld.GetGameObjects().Clear();
-                    cursorPositionX++;
-                    break;
-            }
+            _gameWorld.AddGameObject(new Circle(0, new Point(cursorPositionX, cursorPositionY))); 
 
             //render
             Console.SetCursorPosition(0, 0);
